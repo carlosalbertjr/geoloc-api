@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  php-server:
+    image: php-7.4-apache
+    build: .
+    container_name: geoloc-api
+    ports:
+      - "${SERVER_PORT}:80"
+    volumes:
+      - ./src:/var/www/html  # Mapeando a pasta local 'src' para o diretório 'html' dentro do container
+    environment:
+      - NOMINATIM_API_URL=${NOMINATIM_API_URL}
+      - SERVER_PORT=${SERVER_PORT}
+      - REDIS_HOST=redis  # Variável para conectar com o Redis
+    env_file:
+      - .env
+    depends_on:
+      - redis  # Garante que o serviço Redis seja iniciado antes do PHP
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"  # Porta Redis acessível
+    volumes:
+      - redis_data:/data  # Volume persistente para dados do Redis
+    restart: unless-stopped  # Reiniciar o Redis automaticamente se ele falhar
+
+volumes:
+  redis_data:
+    driver: local
