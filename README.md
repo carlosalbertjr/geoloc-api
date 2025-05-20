@@ -30,7 +30,7 @@ Antes de rodar o projeto, você precisará ter as seguintes ferramentas instalad
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/geo-loc-api.git
+git clone https://github.com/carlosalbertjr/geo-loc-api.git
 cd geo-loc-api
 ```
 
